@@ -14,7 +14,7 @@
 		<module>ConfigServer</module>
 		<module>APIGateway</module>
 		<module>SimulatorService</module>
-		<module>SWAReport</module>
-		<module>Configuration</module>
+	<!--	<module>SWAReport</module>
+		<module>Configuration</module>-->
     </modules>
 </project>
