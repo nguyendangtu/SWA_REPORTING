@@ -1,4 +1,4 @@
-package miu.edu.speedservice;
+package miu.edu.swa.pproject.report;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
