@@ -9,7 +9,7 @@ spring:
         - id: reportingModule
           uri: lb://ReportingService
           predicates:
-            - Path= /reports/**
+            - Path= /report/**
 
 eureka:
   instance:
