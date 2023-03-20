@@ -6,14 +6,11 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: stockModule
-          uri: lb://StockService
+        - id: reportingModule
+          uri: lb://ReportingService
           predicates:
-            - Path= /stocks/**
-        - id: productModule
-          uri: lb://ProductService
-          predicates:
-            - Path= /product/**
+            - Path= /reports/**
+
 eureka:
   instance:
     preferIpAddress: true
