@@ -1,4 +1,4 @@
-package miu.edu.speedservice;
+package miu.edu.swa.pproject.report;
 
 import java.util.HashMap;
 import java.util.Map;
