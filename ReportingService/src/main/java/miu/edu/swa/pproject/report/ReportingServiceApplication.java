@@ -8,10 +8,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableKafka
 @EnableScheduling
-public class SpeedServiceApplication {
+public class ReportingServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpeedServiceApplication.class, args);
+        SpringApplication.run(ReportingServiceApplication.class, args);
     }
 
 }
