@@ -1,6 +1,7 @@
 package miu.edu.swa.pproject.report.service.impl;
 
 import miu.edu.swa.pproject.report.converter.NsiValueConverter;
+import miu.edu.swa.pproject.report.domain.NSIValue;
 import miu.edu.swa.pproject.report.dto.NSIValueDto;
 import miu.edu.swa.pproject.report.repository.NsiValueRepository;
 import miu.edu.swa.pproject.report.service.NsiValueService;
@@ -46,5 +47,14 @@ public class NsiValueServiceImpl implements NsiValueService {
                 .stream()
                 .map(nsiValueConverter::toDto)
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public NSIValue saveRecord(Double value, Long timestamp, String topicName) {
+        NSIValue nsiValue = new NSIValue();
+        nsiValue.setValue(value);
+        nsiValue.setTimestamp(timestamp);
+        nsiValue.setTopicName(topicName);
+        return nsiValueRepository.save(nsiValue);
     }
 }
