@@ -1,6 +1,3 @@
-server:
-  port: 8092
-
 spring:
   application:
     name: ReportingService
@@ -52,3 +49,15 @@ eureka:
 #    root: ERROR
 #org:
 #  springframework: ERROR
+
+---
+spring:
+  profiles: ReportingService1
+server:
+  port: 8092
+
+---
+spring:
+  profiles: ReportingService2
+server:
+  port: 8093

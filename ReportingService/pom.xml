@@ -105,5 +105,23 @@
 		</repository>
 	</repositories>
 
+	<profiles>
+		<profile>
+			<id>ReportingService1</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>ReportingService1</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>ReportingService2</id>
+			<properties>
+				<spring.profiles.active>ReportingService2</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
+
 
 </project>
