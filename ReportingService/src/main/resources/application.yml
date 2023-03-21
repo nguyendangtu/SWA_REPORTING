@@ -35,7 +35,7 @@ eureka:
 
 app:
   topic:
-    nsi-topic-name: NSI_1_3
+    nsi-topic-names: NSI.*
 
 #logging:
 #  level:

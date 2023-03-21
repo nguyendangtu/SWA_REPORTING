@@ -23,7 +23,7 @@ public class NsiReceiver {
         this.kafkaTopicService = kafkaTopicService;
     }
 
-    @KafkaListener(topics = {"${app.topic.nsi-topic-name}"})
+    @KafkaListener(topicPattern = "${app.topic.nsi-topic-names}")
     public void receive(@Payload Double value,
                         @Headers MessageHeaders headers,
                         @Header(KafkaHeaders.RECEIVED_TIMESTAMP) Long timestamp,
