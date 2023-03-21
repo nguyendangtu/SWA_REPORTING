@@ -11,6 +11,10 @@ spring:
       port: 27017
       database: reportingservice
 
+  cloud:
+    config:
+      url: http://localhost:8888
+
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
@@ -33,9 +37,9 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
-app:
-  topic:
-    nsi-topic-names: NSI.*
+#app:
+#  topic:
+#    nsi-topic-names: NSI.*
 
 #logging:
 #  level:

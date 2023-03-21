@@ -10,7 +10,10 @@ import miu.edu.swa.pproject.report.service.NsiValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,7 +45,6 @@ public class NsiValueServiceImpl implements NsiValueService {
         Set<NSIValue> values = nsiValueRepository.findByTimestampBetween(from, to);
         return values.stream()
                 .map(v -> new NsiValueDto(v.getId(), v.getValue(), v.getTimestamp(), v.getTopic().getName()))
-                .sorted(Collections.reverseOrder(Comparator.comparing(NsiValueDto::getTimestamp)))
                 .collect(Collectors.groupingBy(NsiValueDto::getTopic, Collectors.toSet()))
                 .entrySet().stream()
                 .sorted(Collections.reverseOrder(Map.Entry.comparingByKey()))
