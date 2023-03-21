@@ -29,13 +29,13 @@ eureka:
     preferIpAddress: true
   client:
     registerWithEureka: true
-    fetchRegistry: false
+    fetchRegistry: true
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
 app:
   topic:
-    nsi-topic-name: NSI_1_2
+    nsi-topic-name: NSI_1_3
 
 #logging:
 #  level:

@@ -6,7 +6,6 @@ import miu.edu.swa.pproject.report.service.NsiValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.Set;
 
 @Service
@@ -24,17 +23,17 @@ public class NsiValueServiceImpl implements NsiValueService {
     }
 
     @Override
-    public Set<NSIValue> getByTimestamp(Date timestamp) {
-        return nsiValueRepository.findByTimestamp(timestamp);
+    public Set<NSIValue> getByDuration(Long from, Long to) {
+        return nsiValueRepository.findByTimestampBetween(from, to);
     }
 
     @Override
-    public Set<NSIValue> getByTopicNameAndTimestamp(String topicName, Date timestamp) {
-        return nsiValueRepository.findByTopicNameAndTimestamp(topicName, timestamp);
+    public Set<NSIValue> getByTopicNameAndDuration(String topicName, Long from, Long to) {
+        return nsiValueRepository.findByTopicNameAndTimestampBetween(topicName, from, to);
     }
 
     @Override
-    public NSIValue saveRecord(Double value, Long timestamp, String topicName) {
+    public NSIValue save(Double value, Long timestamp, String topicName) {
         NSIValue nsiValue = new NSIValue();
         nsiValue.setValue(value);
         nsiValue.setTimestamp(timestamp);

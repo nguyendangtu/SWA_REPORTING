@@ -1,6 +1,7 @@
 package miu.edu.swa.pproject.report.kafka;
 
 
+import miu.edu.swa.pproject.report.service.KafkaTopicService;
 import miu.edu.swa.pproject.report.service.NsiValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -13,18 +14,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class NsiReceiver {
-    NsiValueService nsiValueService;
+    private final NsiValueService nsiValueService;
+    private final KafkaTopicService kafkaTopicService;
 
     @Autowired
-    public NsiReceiver(NsiValueService nsiValueService) {
+    public NsiReceiver(NsiValueService nsiValueService, KafkaTopicService kafkaTopicService) {
         this.nsiValueService = nsiValueService;
+        this.kafkaTopicService = kafkaTopicService;
     }
 
     @KafkaListener(topics = {"${app.topic.nsi-topic-name}"})
     public void receive(@Payload Double value,
                         @Headers MessageHeaders headers,
+                        @Header(KafkaHeaders.RECEIVED_TIMESTAMP) Long timestamp,
                         @Header(KafkaHeaders.RECEIVED_TOPIC) String topicName) {
-        nsiValueService.saveRecord(value, headers.getTimestamp(), topicName);
+        nsiValueService.save(value, timestamp, topicName);
+        kafkaTopicService.saveTopic(topicName);
     }
 
 }

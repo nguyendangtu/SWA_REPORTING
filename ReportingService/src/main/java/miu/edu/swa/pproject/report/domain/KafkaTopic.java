@@ -6,14 +6,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "nsi_values")
+@Document(collection = "kafka_topics")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NSIValue {
+public class KafkaTopic {
     @Id
-    private String id;
-    private Double value;
-    private Long timestamp;
-    private String topicName;
+    private String name;
 }
