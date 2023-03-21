@@ -13,6 +13,10 @@ spring:
   zipkin:
     base-url: http://localhost:9411/
 
+  cloud:
+    config:
+      url: http://localhost:8888
+
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
@@ -39,9 +43,9 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
-app:
-  topic:
-    nsi-topic-names: NSI.*
+#app:
+#  topic:
+#    nsi-topic-names: NSI.*
 
 #logging:
 #  level:

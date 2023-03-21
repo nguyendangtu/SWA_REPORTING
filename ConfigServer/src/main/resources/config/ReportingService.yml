@@ -1,1 +1,3 @@
-greeting: Hello from Service AA
+app:
+  topic:
+    nsi-topic-names: NSI.*

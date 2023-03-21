@@ -20,6 +20,7 @@ public class NsiValueServiceImpl implements NsiValueService {
     private final NsiValueRepository nsiValueRepository;
     private final KafkaTopicRepository kafkaTopicRepository;
 
+    Comparator<NsiValueDto> timestampComparator = (a, b) -> b.getTimestamp().compareTo(a.getTimestamp());
     @Autowired
     public NsiValueServiceImpl(NsiValueRepository nsiValueRepository, KafkaTopicRepository kafkaTopicRepository) {
         this.nsiValueRepository = nsiValueRepository;
@@ -32,7 +33,7 @@ public class NsiValueServiceImpl implements NsiValueService {
             Set<NSIValue> values = nsiValueRepository.findByTopic(kafkaTopic);
             NsiReportDto report = new NsiReportDto();
             report.setTopicName(kafkaTopic.getName());
-            report.setData(values.stream().map(v -> new NsiValueDto(v.getId(), v.getValue(), v.getTimestamp())).collect(Collectors.toSet()));
+            report.setData(values.stream().map(v -> new NsiValueDto(v.getId(), v.getValue(), v.getTimestamp())).sorted(timestampComparator).collect(Collectors.toCollection(LinkedHashSet::new)));
             return report;
         }).orElseGet(NsiReportDto::new);
     }
@@ -42,12 +43,11 @@ public class NsiValueServiceImpl implements NsiValueService {
         Set<NSIValue> values = nsiValueRepository.findByTimestampBetween(from, to);
         return values.stream()
                 .map(v -> new NsiValueDto(v.getId(), v.getValue(), v.getTimestamp(), v.getTopic().getName()))
-                .sorted(Collections.reverseOrder(Comparator.comparing(NsiValueDto::getTimestamp)))
                 .collect(Collectors.groupingBy(NsiValueDto::getTopic, Collectors.toSet()))
                 .entrySet().stream()
-                .sorted(Collections.reverseOrder(Map.Entry.comparingByKey()))
-                .map(e -> new NsiReportDto(e.getKey(), e.getValue()))
-                .collect(Collectors.toSet());
+                .sorted(Map.Entry.comparingByKey(Comparator.reverseOrder()))
+                .map(e -> new NsiReportDto(e.getKey(), e.getValue().stream().sorted(timestampComparator).collect(Collectors.toCollection(LinkedHashSet::new))))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class NsiValueServiceImpl implements NsiValueService {
             Set<NSIValue> values = nsiValueRepository.findByTopicNameAndTimestampBetween(topicName, from, to);
             NsiReportDto report = new NsiReportDto();
             report.setTopicName(kafkaTopic.getName());
-            report.setData(values.stream().map(v -> new NsiValueDto(v.getId(), v.getValue(), v.getTimestamp())).collect(Collectors.toSet()));
+            report.setData(values.stream().map(v -> new NsiValueDto(v.getId(), v.getValue(), v.getTimestamp())).sorted(timestampComparator).collect(Collectors.toCollection(LinkedHashSet::new)));
             return report;
         }).orElseGet(NsiReportDto::new);
     }
