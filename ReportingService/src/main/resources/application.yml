@@ -10,6 +10,8 @@ spring:
       host: localhost
       port: 27017
       database: reportingservice
+  zipkin:
+    base-url: http://localhost:9411/
 
   kafka:
     bootstrap-servers: localhost:9092
@@ -23,6 +25,10 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+sleuth:
+  sampler:
+    probability: 1 #100% (default = 10%)
 
 eureka:
   instance:
