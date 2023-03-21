@@ -41,7 +41,7 @@ public class NsiValueServiceImpl implements NsiValueService {
     public Set<NsiReportDto> getByDuration(Long from, Long to) {
         Set<NSIValue> values = nsiValueRepository.findByTimestampBetween(from, to);
         return values.stream()
-                .map(v -> new NsiValueDto(v.getId(), v.getValue(), v.getTimestamp(), v.getTopic().getName(), v.getTopic().getFirstIndex(), v.getTopic().getSecondIndex()))
+                .map(v -> new NsiValueDto(v.getId(), v.getValue(), v.getTimestamp(), v.getTopic().getName()))
                 .sorted(Collections.reverseOrder(Comparator.comparing(NsiValueDto::getTimestamp)))
                 .collect(Collectors.groupingBy(NsiValueDto::getTopic, Collectors.toSet()))
                 .entrySet().stream()
