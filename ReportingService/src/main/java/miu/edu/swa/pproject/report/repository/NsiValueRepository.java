@@ -1,5 +1,6 @@
 package miu.edu.swa.pproject.report.repository;
 
+import miu.edu.swa.pproject.report.domain.KafkaTopic;
 import miu.edu.swa.pproject.report.domain.NSIValue;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -7,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 
 @Repository
-public interface NsiValueRepository extends MongoRepository<NSIValue, Long> {
+public interface NsiValueRepository extends MongoRepository<NSIValue, String> {
+
+    Set<NSIValue> findByTopic(KafkaTopic topic);
 
     Set<NSIValue> findByTopicName(String topicName);
 

@@ -1,6 +1,6 @@
 package miu.edu.swa.pproject.report.controller;
 
-import miu.edu.swa.pproject.report.domain.NSIValue;
+import miu.edu.swa.pproject.report.dto.NsiReportDto;
 import miu.edu.swa.pproject.report.service.KafkaTopicService;
 import miu.edu.swa.pproject.report.service.NsiValueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,20 +31,20 @@ public class ReportController {
 
     @GetMapping("/time")
     @ResponseStatus(HttpStatus.OK)
-    public Set<NSIValue> getByTime(@RequestParam("from") Long from, @RequestParam("to") Long to) {
+    public Set<NsiReportDto> getByTime(@RequestParam("from") Long from, @RequestParam("to") Long to) {
         return nsiValueService.getByDuration(from, to);
     }
 
     @GetMapping("/topic/{topicName}")
     @ResponseStatus(HttpStatus.OK)
-    public Set<NSIValue> getByTopicName(@PathVariable("topicName") String topicName) {
+    public NsiReportDto getByTopicName(@PathVariable("topicName") String topicName) {
         return nsiValueService.getByTopicName(topicName);
     }
 
     @GetMapping("/topic/{topicName}/time")
     @ResponseStatus(HttpStatus.OK)
-    public Set<NSIValue> getByTimeAndTopic(@PathVariable("topicName") String topicName,
-                                           @RequestParam("from") Long from, @RequestParam("to") Long to) {
+    public NsiReportDto getByTimeAndTopic(@PathVariable("topicName") String topicName,
+                                          @RequestParam("from") Long from, @RequestParam("to") Long to) {
         return nsiValueService.getByTopicNameAndDuration(topicName, from, to);
     }
 }

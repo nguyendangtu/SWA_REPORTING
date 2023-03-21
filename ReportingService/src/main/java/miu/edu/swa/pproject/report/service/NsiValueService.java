@@ -1,15 +1,16 @@
 package miu.edu.swa.pproject.report.service;
 
 import miu.edu.swa.pproject.report.domain.NSIValue;
+import miu.edu.swa.pproject.report.dto.NsiReportDto;
 
 import java.util.Set;
 
 public interface NsiValueService {
-    Set<NSIValue> getByTopicName(String topicName);
+    NsiReportDto getByTopicName(String topicName);
 
-    Set<NSIValue> getByDuration(Long from, Long to);
+    Set<NsiReportDto> getByDuration(Long from, Long to);
 
-    Set<NSIValue> getByTopicNameAndDuration(String topicName, Long from, Long to);
+    NsiReportDto getByTopicNameAndDuration(String topicName, Long from, Long to);
 
     NSIValue save(Double value, Long timestamp, String topicName);
 }

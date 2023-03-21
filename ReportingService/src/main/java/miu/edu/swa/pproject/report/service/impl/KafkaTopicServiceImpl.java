@@ -6,6 +6,7 @@ import miu.edu.swa.pproject.report.service.KafkaTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,8 +25,7 @@ public class KafkaTopicServiceImpl implements KafkaTopicService {
     }
 
     @Override
-    public void saveTopic(String topic) {
-        kafkaTopicRepository.findById(topic).ifPresentOrElse(kafkaTopic -> {
-        }, () -> kafkaTopicRepository.save(new KafkaTopic(topic)));
+    public Set<KafkaTopic> getAllTopicsWithIndices() {
+        return new HashSet<>(kafkaTopicRepository.findAll());
     }
 }

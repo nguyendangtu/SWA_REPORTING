@@ -15,5 +15,5 @@ public class NSIValue {
     private String id;
     private Double value;
     private Long timestamp;
-    private String topicName;
+    private KafkaTopic topic;
 }
