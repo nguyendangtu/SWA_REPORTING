@@ -5,6 +5,13 @@ spring:
     name: APIGateway
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
       routes:
         - id: reportingModule
           uri: lb://ReportingService

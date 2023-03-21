@@ -1,5 +1,6 @@
 package miu.edu.swa.pproject.report.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import miu.edu.swa.pproject.report.dto.NsiReportDto;
 import miu.edu.swa.pproject.report.service.KafkaTopicService;
 import miu.edu.swa.pproject.report.service.NsiValueService;
@@ -23,24 +24,28 @@ public class ReportController {
         this.kafkaTopicService = kafkaTopicService;
     }
 
+    @Operation(summary = "Get list of kafka topics")
     @GetMapping("/topics")
     @ResponseStatus(HttpStatus.OK)
     public Set<String> topics() {
         return kafkaTopicService.getAllTopics();
     }
 
+    @Operation(summary = "Get NSI report by time period")
     @GetMapping("/time")
     @ResponseStatus(HttpStatus.OK)
     public Set<NsiReportDto> getByTime(@RequestParam("from") Long from, @RequestParam("to") Long to) {
         return nsiValueService.getByDuration(from, to);
     }
 
+    @Operation(summary = "Get NSI report by topic name")
     @GetMapping("/topic/{topicName}")
     @ResponseStatus(HttpStatus.OK)
     public NsiReportDto getByTopicName(@PathVariable("topicName") String topicName) {
         return nsiValueService.getByTopicName(topicName);
     }
 
+    @Operation(summary = "Get NSI report by topic name and time period")
     @GetMapping("/topic/{topicName}/time")
     @ResponseStatus(HttpStatus.OK)
     public NsiReportDto getByTimeAndTopic(@PathVariable("topicName") String topicName,
