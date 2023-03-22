@@ -1,8 +1,6 @@
 package miu.edu.swa.pproject.report.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import miu.edu.swa.pproject.report.dto.NsiReportDto;
-import miu.edu.swa.pproject.report.service.KafkaTopicService;
 import miu.edu.swa.pproject.report.service.NsiValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,13 +23,24 @@ public class CsvReportController {
         this.nsiValueService = nsiValueService;
     }
 
+    @Operation(summary = "Get NSI CSV report by topic name and time period")
+    @GetMapping("/report/csv")
+    @ResponseStatus(HttpStatus.OK)
+    public void getCsvReport(@RequestParam(value = "topicName", required = false) String topicName,
+                             @RequestParam(value = "from", required = false) Long from,
+                             @RequestParam(value = "to", required = false) Long to,
+                             HttpServletResponse servletResponse) throws IOException {
+        servletResponse.setContentType("text/csv");
+        servletResponse.addHeader("Content-Disposition", "attachment; filename=\"nsi_report.csv\"");
+        nsiValueService.getCsvReport(topicName, from, to, servletResponse.getWriter());
+    }
+
     @Operation(summary = "Get NSI CSV report by time period")
     @GetMapping("/csv/time")
     @ResponseStatus(HttpStatus.OK)
     public void getByTime(@RequestParam("from") Long from, @RequestParam("to") Long to, HttpServletResponse servletResponse) throws IOException {
-//        return nsiValueService.getByDuration(from, to);
         servletResponse.setContentType("text/csv");
-        servletResponse.addHeader("Content-Disposition","attachment; filename=\"nsi.csv\"");
+        servletResponse.addHeader("Content-Disposition", "attachment; filename=\"nsi.csv\"");
         nsiValueService.getByDuration(from, to, servletResponse.getWriter());
     }
 
@@ -39,7 +48,6 @@ public class CsvReportController {
     @GetMapping("/csv/topic/{topicName}")
     @ResponseStatus(HttpStatus.OK)
     public void getByTopicName(@PathVariable("topicName") String topicName, HttpServletResponse servletResponse) throws IOException {
-//        return nsiValueService.getByTopicName(topicName);
         servletResponse.setContentType("text/csv");
         servletResponse.addHeader("Content-Disposition","attachment; filename=\"nsi.csv\"");
         nsiValueService.getByTopicName(topicName,servletResponse.getWriter());
@@ -51,7 +59,6 @@ public class CsvReportController {
     public void getByTimeAndTopic(@PathVariable("topicName") String topicName,
                                           @RequestParam("from") Long from, @RequestParam("to") Long to,
                                           HttpServletResponse servletResponse) throws IOException {
-//        return nsiValueService.getByTopicNameAndDuration(topicName, from, to);
         servletResponse.setContentType("text/csv");
         servletResponse.addHeader("Content-Disposition","attachment; filename=\"nsi.csv\"");
         nsiValueService.getByTopicNameAndDuration(topicName, from, to,servletResponse.getWriter());

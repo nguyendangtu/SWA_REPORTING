@@ -9,6 +9,7 @@ import miu.edu.swa.pproject.report.repository.NsiValueRepository;
 import miu.edu.swa.pproject.report.service.NsiValueService;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -110,14 +111,20 @@ public class NsiValueServiceImpl implements NsiValueService {
         if (to == null) {
             to = System.currentTimeMillis();
         }
-        if (topicName != null && from == null) {
+
+        if (StringUtils.isNotEmpty(topicName) && from == null) {
             result.add(getByTopicName(topicName));
-        } else if (topicName == null && from != null) {
+        } else if (StringUtils.isEmpty(topicName) && from != null) {
             result.addAll(getByDuration(from, to));
-        } else if (topicName != null) {
+        } else if (StringUtils.isNotEmpty(topicName)) {
             result.add(getByTopicNameAndDuration(topicName, from, to));
         }
         return result;
+    }
+
+    @Override
+    public void getCsvReport(String topicName, Long from, Long to, PrintWriter writer) {
+        nsiReportDtoSetToCsv(getReport(topicName, from, to), writer);
     }
 
     private void nsiReportDtoToCsv(NsiReportDto nsiReportDto, PrintWriter writer) {
@@ -128,7 +135,7 @@ public class NsiValueServiceImpl implements NsiValueService {
             while (valuesItr.hasNext()) {
                 NsiValueDto nsiValue = valuesItr.next();
                 csvPrinter.printRecord(nsiReportDto.getTopicName(), nsiValue.getTimestamp(), nsiValue.getValue());
-                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
