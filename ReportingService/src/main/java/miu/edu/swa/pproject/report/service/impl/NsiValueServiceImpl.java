@@ -7,9 +7,13 @@ import miu.edu.swa.pproject.report.dto.NsiValueDto;
 import miu.edu.swa.pproject.report.repository.KafkaTopicRepository;
 import miu.edu.swa.pproject.report.repository.NsiValueRepository;
 import miu.edu.swa.pproject.report.service.NsiValueService;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,6 +43,11 @@ public class NsiValueServiceImpl implements NsiValueService {
     }
 
     @Override
+    public void getByTopicName(String topicName, PrintWriter writer) {
+        nsiReportDtoToCsv(getByTopicName(topicName), writer);
+    }
+
+    @Override
     public Set<NsiReportDto> getByDuration(Long from, Long to) {
         Set<NSIValue> values = nsiValueRepository.findByTimestampBetween(from, to);
         return values.stream()
@@ -51,6 +60,11 @@ public class NsiValueServiceImpl implements NsiValueService {
     }
 
     @Override
+    public void getByDuration(Long from, Long to, PrintWriter writer) {
+        nsiReportDtoSetToCsv(getByDuration(from, to), writer);
+    }
+
+    @Override
     public NsiReportDto getByTopicNameAndDuration(String topicName, Long from, Long to) {
         return kafkaTopicRepository.findById(topicName).map(kafkaTopic -> {
             Set<NSIValue> values = nsiValueRepository.findByTopicNameAndTimestampBetween(topicName, from, to);
@@ -59,6 +73,11 @@ public class NsiValueServiceImpl implements NsiValueService {
             report.setData(values.stream().map(v -> new NsiValueDto(v.getId(), v.getValue(), v.getTimestamp())).sorted(timestampComparator).collect(Collectors.toCollection(LinkedHashSet::new)));
             return report;
         }).orElseGet(NsiReportDto::new);
+    }
+
+    @Override
+    public void getByTopicNameAndDuration(String topicName, Long from, Long to, PrintWriter writer) {
+        nsiReportDtoToCsv(getByTopicNameAndDuration(topicName, from, to), writer);
     }
 
     @Override
@@ -83,5 +102,38 @@ public class NsiValueServiceImpl implements NsiValueService {
         nsiValue.setTimestamp(timestamp);
         nsiValue.setTopic(kafkaTopic);
         return nsiValueRepository.save(nsiValue);
+    }
+
+    private void nsiReportDtoToCsv(NsiReportDto nsiReportDto, PrintWriter writer){
+        try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
+            csvPrinter.printRecord("Topic name", "Timestamp", "Value");
+            Set<NsiValueDto> valuesSet = nsiReportDto.getData();
+                Iterator<NsiValueDto> valuesItr = valuesSet.iterator();
+                while(valuesItr.hasNext()){
+                    NsiValueDto nsiValue = valuesItr.next();
+                    csvPrinter.printRecord(nsiReportDto.getTopicName(), nsiValue.getTimestamp(), nsiValue.getValue());
+                }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void nsiReportDtoSetToCsv(Set<NsiReportDto> set, PrintWriter writer){
+        try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
+            csvPrinter.printRecord("Topic name", "Timestamp", "Value");
+            Iterator<NsiReportDto> reportsIterator = set.iterator();
+            while(reportsIterator.hasNext()){
+                NsiReportDto reportSet = reportsIterator.next();
+                String topicName = reportSet.getTopicName();
+                Set<NsiValueDto> valuesSet = reportSet.getData();
+                Iterator<NsiValueDto> valuesItr = valuesSet.iterator();
+                while(valuesItr.hasNext()){
+                    NsiValueDto nsiValue = valuesItr.next();
+                    csvPrinter.printRecord(topicName, nsiValue.getTimestamp(), nsiValue.getValue());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
