@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28f8dee4-9dc4-4fcf-85b6-043efa3c90e9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APIGateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/APIGateway/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReportingService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ReportingService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReportingService/src/main/java/miu/edu/swa/pproject/report/SpeedServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/ReportingService/src/main/java/miu/edu/swa/pproject/report/SpeedServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReportingService/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/ReportingService/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,9 +40,12 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/lethanhtung/Documents/miu/Nov_entry_2022/SWA/lab and project/SWA_REPORTING",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Problems",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+    "project.structure.side.proportion": "0.2",
+    "spring.configuration.checksum": "e2d15a831c55006b1cdd1ab34b8cb566"
   }
 }]]></component>
   <component name="RunDashboard">
@@ -55,7 +55,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.SpeedServiceApplication">
+  <component name="RunManager" selected="Spring Boot.EurekaServerApplication">
     <configuration name="APIGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="APIGateway" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="miu.edu.eurekaserver.APIGatewayApplication" />
@@ -73,6 +73,13 @@
     <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="EurekaServer" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="miu.edu.eurekaserver.EurekaServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReportingServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="ReportingService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="miu.edu.swa.pproject.report.ReportingServiceApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -112,6 +119,8 @@
       <option name="presentableId" value="Default" />
       <updated>1679347605561</updated>
       <workItem from="1679347606783" duration="3111000" />
+      <workItem from="1679361303697" duration="144000" />
+      <workItem from="1679361519514" duration="1951000" />
     </task>
     <servers />
   </component>

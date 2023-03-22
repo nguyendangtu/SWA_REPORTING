@@ -5,15 +5,13 @@ import miu.edu.swa.pproject.report.service.NsiValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
+@CrossOrigin
 public class CsvReportController {
 
     private final NsiValueService nsiValueService;
@@ -62,6 +60,11 @@ public class CsvReportController {
                                           HttpServletResponse servletResponse) throws IOException {
         servletResponse.setContentType("text/csv");
         servletResponse.addHeader("Content-Disposition","attachment; filename=\"nsi.csv\"");
+        servletResponse.addHeader("Access-Control-Allow-Origin", "*");
+        servletResponse.addHeader("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE, PATCH, OPTIONS");
+        servletResponse.addHeader("Access-Control-Max-Age", "3600");
+        servletResponse.addHeader("Access-Control-Allow-Credentials", "true");
+        servletResponse.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
         nsiValueService.getByTopicNameAndDuration(topicName, from, to,servletResponse.getWriter());
     }
 }
