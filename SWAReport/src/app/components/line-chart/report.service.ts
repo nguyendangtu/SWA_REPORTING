@@ -76,7 +76,7 @@ export class ReportService {
             for (let dataItem of item.data) {
                 let chartDTO: ChartDTO = {
                     // x: dataItem.timestamp,
-                    label: this.datePipe.transform(dataItem.timestamp, 'HH:mm'),
+                    label: this.datePipe.transform(dataItem.timestamp, 'HH:mm:ss'),
                     y: dataItem.value
                 };
 
