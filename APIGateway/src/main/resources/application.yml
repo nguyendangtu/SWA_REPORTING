@@ -17,6 +17,7 @@ spring:
           uri: lb://ReportingService
           predicates:
             - Path= /report/**
+            - Path= /report/csv/**
 
 eureka:
   instance:

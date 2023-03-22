@@ -32,6 +32,7 @@ public class CsvReportController {
                              HttpServletResponse servletResponse) throws IOException {
         servletResponse.setContentType("text/csv");
         servletResponse.addHeader("Content-Disposition", "attachment; filename=\"nsi_report.csv\"");
+        servletResponse.addHeader("Access-Control-Allow-Origin", "*");
         nsiValueService.getCsvReport(topicName, from, to, servletResponse.getWriter());
     }
 
