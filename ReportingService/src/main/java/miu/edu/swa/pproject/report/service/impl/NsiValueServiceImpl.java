@@ -25,7 +25,7 @@ public class NsiValueServiceImpl implements NsiValueService {
     private final NsiValueRepository nsiValueRepository;
     private final KafkaTopicRepository kafkaTopicRepository;
 
-    Comparator<NsiValueDto> timestampComparator = (a, b) -> b.getTimestamp().compareTo(a.getTimestamp());
+    Comparator<NsiValueDto> timestampComparator = Comparator.comparing(NsiValueDto::getTimestamp);
     @Autowired
     public NsiValueServiceImpl(NsiValueRepository nsiValueRepository, KafkaTopicRepository kafkaTopicRepository) {
         this.nsiValueRepository = nsiValueRepository;
@@ -115,7 +115,7 @@ public class NsiValueServiceImpl implements NsiValueService {
         if (StringUtils.isNotEmpty(topicName) && from == null) {
             result.add(getByTopicName(topicName));
         } else if (StringUtils.isEmpty(topicName) && from != null) {
-            result.addAll(getByDuration(from, to));
+            return getByDuration(from, to);
         } else if (StringUtils.isNotEmpty(topicName)) {
             result.add(getByTopicNameAndDuration(topicName, from, to));
         }
