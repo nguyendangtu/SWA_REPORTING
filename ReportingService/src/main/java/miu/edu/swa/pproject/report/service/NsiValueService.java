@@ -20,4 +20,6 @@ public interface NsiValueService {
     void getByTopicNameAndDuration(String topicName, Long from, Long to, PrintWriter writer);
 
     NSIValue save(Double value, Long timestamp, String topicName);
+
+    Set<NsiReportDto> getReport(String topicName, Long from, Long to);
 }

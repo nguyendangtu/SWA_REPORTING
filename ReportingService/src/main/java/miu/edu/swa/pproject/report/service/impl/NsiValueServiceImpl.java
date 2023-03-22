@@ -104,14 +104,30 @@ public class NsiValueServiceImpl implements NsiValueService {
         return nsiValueRepository.save(nsiValue);
     }
 
-    private void nsiReportDtoToCsv(NsiReportDto nsiReportDto, PrintWriter writer){
+    @Override
+    public Set<NsiReportDto> getReport(String topicName, Long from, Long to) {
+        Set<NsiReportDto> result = new HashSet<>();
+        if (to == null) {
+            to = System.currentTimeMillis();
+        }
+        if (topicName != null && from == null) {
+            result.add(getByTopicName(topicName));
+        } else if (topicName == null && from != null) {
+            result.addAll(getByDuration(from, to));
+        } else if (topicName != null) {
+            result.add(getByTopicNameAndDuration(topicName, from, to));
+        }
+        return result;
+    }
+
+    private void nsiReportDtoToCsv(NsiReportDto nsiReportDto, PrintWriter writer) {
         try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
             csvPrinter.printRecord("Topic name", "Timestamp", "Value");
             Set<NsiValueDto> valuesSet = nsiReportDto.getData();
-                Iterator<NsiValueDto> valuesItr = valuesSet.iterator();
-                while(valuesItr.hasNext()){
-                    NsiValueDto nsiValue = valuesItr.next();
-                    csvPrinter.printRecord(nsiReportDto.getTopicName(), nsiValue.getTimestamp(), nsiValue.getValue());
+            Iterator<NsiValueDto> valuesItr = valuesSet.iterator();
+            while (valuesItr.hasNext()) {
+                NsiValueDto nsiValue = valuesItr.next();
+                csvPrinter.printRecord(nsiReportDto.getTopicName(), nsiValue.getTimestamp(), nsiValue.getValue());
                 }
         } catch (IOException e) {
             e.printStackTrace();

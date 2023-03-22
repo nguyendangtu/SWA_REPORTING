@@ -31,6 +31,15 @@ public class ReportController {
         return kafkaTopicService.getAllTopics();
     }
 
+    @Operation(summary = "Get NSI report by topic name and time period")
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Set<NsiReportDto> getReport(@RequestParam(value = "topicName", required = false) String topicName,
+                                       @RequestParam(value = "from", required = false) Long from,
+                                       @RequestParam(value = "to", required = false) Long to) {
+        return nsiValueService.getReport(topicName, from, to);
+    }
+
     @Operation(summary = "Get NSI report by time period")
     @GetMapping("/time")
     @ResponseStatus(HttpStatus.OK)
