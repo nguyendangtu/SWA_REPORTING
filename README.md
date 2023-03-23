@@ -6,9 +6,9 @@
     - PM: Manh Tien Le
     - Technical Lead: Thanh Tung Le
     - BA: Phuong Thao Do
-    - Senior Developer: Nam Le, Hoang Long Nguyen
+    - Senior Developer: Quoc Nam Le, Hoang Long Nguyen
 
 - Responsibilities:
-    All team member discuss and final solutions. PM, SA, Tech lead, BA support developer to delivery on times.
+    All team member discuss and finalize solutions. PM, SA, Tech lead, BA support developers to delivery on times.
 
     
